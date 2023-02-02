@@ -36,7 +36,7 @@ class MigrationEntity
         $this->created_at = $created_at;
     }
 
-    public static function fromArray(array $data): static
+    public static function fromArray(array $data): self
     {
         return new static(
             $data['migration_name'],
