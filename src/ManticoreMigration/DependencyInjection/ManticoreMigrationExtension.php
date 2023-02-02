@@ -22,7 +22,7 @@ class ManticoreMigrationExtension extends Extension implements PrependExtensionI
 		$configuration = new Configuration();
 
 		$config = $this->processConfiguration($configuration, $configs);
-
+		dd($config);
 		$container->setParameter('manticore_migrations.manticore_path', $config['manticore_migrations']['migrations_path']);
 		$container->setParameter('manticore_migrations.manticore_host', $config['manticore_migrations']['manticore_instance']['host']);
 		$container->setParameter('manticore_migrations.manticore_port', $config['manticore_migrations']['manticore_instance']['port']);
