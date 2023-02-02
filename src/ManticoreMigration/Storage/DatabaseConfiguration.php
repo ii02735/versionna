@@ -56,7 +56,7 @@ final class DatabaseConfiguration
      * @throws InvalidDsnException
      * @return DatabaseConfiguration
      */
-    public static function fromDsn(string $dsn): static
+    public static function fromDsn(string $dsn): self
     {
         $config = [];
         $dsnParsed = DsnParser::parse($dsn);
@@ -71,9 +71,9 @@ final class DatabaseConfiguration
         return new DatabaseConfiguration($config);
     }
 
-    public static function fromArray(array $config): static
+    public static function fromArray(array $config): self
     {
-        return new static($config);
+        return new self($config);
     }
 
     public function getDriver(): string
