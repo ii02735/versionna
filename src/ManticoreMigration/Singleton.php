@@ -14,7 +14,7 @@ trait Singleton
     /**
      * @return static
      */
-    final public static function getInstance(): static
+    final public static function getInstance(): self
     {
         return ! self::$instance
             ? self::$instance = new static()
