@@ -211,15 +211,11 @@ class MigrationDirector
      */
     public function migrate(): void
     {
-        try {
-            if (! $this->migrationTable->exists()) {
-                $this->migrationTable->create();
-            }
+		if (! $this->migrationTable->exists()) {
+			$this->migrationTable->create();
+		}
 
-            $this->runPendingMigrations($this->getPendingMigrations());
-        } catch (Exception $e) {
-            throw $e;
-        }
+		$this->runPendingMigrations($this->getPendingMigrations());
     }
 
     /**

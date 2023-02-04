@@ -126,7 +126,7 @@ class MigrationTable
         return empty($result) ? [] : $result;
     }
 
-    public function getLatestVersion(): mixed
+    public function getLatestVersion()
     {
         $query = "SELECT MAX(version) FROM {$this->getFullTableName()}";
 
@@ -260,7 +260,7 @@ class MigrationTable
         }, $results);
     }
 
-    public function getAll(bool $ascending = false): mixed
+    public function getAll(bool $ascending = false)
     {
         $query = "SELECT * FROM {$this->getFullTableName()} ORDER BY id " . ($ascending ? 'ASC' : 'DESC');
 

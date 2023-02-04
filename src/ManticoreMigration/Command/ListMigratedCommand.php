@@ -13,7 +13,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ListMigratedCommand extends AbstractCommand
 {
-    protected static $defaultName = 'migration:list:migrated';
+    protected static $defaultName = 'manticore:migrations:migrated';
 
     /**
      * {@inheritDoc}

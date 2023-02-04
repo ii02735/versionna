@@ -4,15 +4,8 @@ parameters:
       host: "%manticore_migrations.manticore_host%"
       port: "%manticore_migrations.manticore_port%"
 
-    connection:
-      driver: "%manticore_migrations.database_driver%"
-      host: "%manticore_migrations.database_host%"
-      port: "%manticore_migrations.database_port%"
-      database: "%manticore_migrations.database_name%"
-      user: "%manticore_migrations.database_user%"
-      password: "%manticore_migrations.database_password%"
-      # if "dsn" key is added, create connection instead of taking previous parameters
-      dsn: "%manticore_migrations.database_dsn%"
+    connections: "%manticore_migrations.database_connections%"
+    connection: "%manticore_migrations.connection%"
 
     migration_table: "%manticore_migrations.database_migration_table%"
     table_prefix: "%manticore_migrations.database_table_prefix%"
@@ -31,7 +24,24 @@ services:
       - '../../Resources/'
 
   SiroDiaz\ManticoreMigration\Command\AbstractCommand:
-    arguments: ['%command.configuration.connection%']
+    arguments:
+      $configuration: '%command.configuration%'
     tags: [ 'console.command' ]
 
+  SiroDiaz\ManticoreMigration\Command\FreshCommand:
+    parent: SiroDiaz\ManticoreMigration\Command\AbstractCommand
 
+  SiroDiaz\ManticoreMigration\Command\ListMigratedCommand:
+    parent: SiroDiaz\ManticoreMigration\Command\AbstractCommand
+
+  SiroDiaz\ManticoreMigration\Command\ListPendingCommand:
+    parent: SiroDiaz\ManticoreMigration\Command\AbstractCommand
+
+  SiroDiaz\ManticoreMigration\Command\MakeMigrationCommand:
+    parent: SiroDiaz\ManticoreMigration\Command\AbstractCommand
+
+  SiroDiaz\ManticoreMigration\Command\MigrateCommand:
+    parent: SiroDiaz\ManticoreMigration\Command\AbstractCommand
+
+  SiroDiaz\ManticoreMigration\Command\RollbackCommand:
+    parent: SiroDiaz\ManticoreMigration\Command\AbstractCommand

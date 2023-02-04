@@ -45,7 +45,7 @@ final class DatabaseConfiguration
         $this->driver = $config['driver'] ?? 'mysql';
         $this->host = $config['host'] ?? 'localhost';
         $this->port = $config['port'] ?? '3306';
-        $this->dbname = $config['database'] ?? 'manticore';
+        $this->dbname = $config['dbname'] ?? 'manticore';
         $this->user = $config['user'] ?? null;
         $this->password = $config['password'] ?? null;
         $this->params = $config['params'] ?? [];
@@ -63,10 +63,11 @@ final class DatabaseConfiguration
 
         $config['driver'] = $dsnParsed->getScheme();
         $config['host'] = $dsnParsed->getHost();
-        $config['dbname'] = $dsnParsed->getPath();
+        $config['dbname'] = $config['driver'] !== 'sqlite' ? ltrim($dsnParsed->getPath(),'/'): $dsnParsed->getPath();
         $config['user'] = $dsnParsed->getUser();
         $config['password'] = $dsnParsed->getPassword();
         $config['params'] = $dsnParsed->getParameters();
+
 
         return new DatabaseConfiguration($config);
     }

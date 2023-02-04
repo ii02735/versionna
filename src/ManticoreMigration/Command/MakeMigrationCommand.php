@@ -8,10 +8,11 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class MakeMigrationCommand extends AbstractCommand
 {
-    protected static $defaultName = 'make:migration';
+    protected static $defaultName = 'manticore:migrations:make';
 
     /**
      * {@inheritDoc}
@@ -35,15 +36,16 @@ class MakeMigrationCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        if ($input->getOption('configuration') === null) {
-            $output->writeln('<error>You must specify a configuration file</error>');
+		$io = new SymfonyStyle($input,$output);
 
-            return Command::INVALID;
-        }
+		if (is_null($this->configuration['migrations_path']))
+		{
+			$io->error('The migrations_path parameter must be filled');
+			return Command::FAILURE;
+		}
 
-        $configuration = require $input->getOption('configuration');
         $creator = new MigrationCreator(
-            $configuration['migrations_path'],
+            $this->configuration['migrations_path'],
             $input->getArgument('name'),
             $input->getOption('description') ?? '',
         );

@@ -14,7 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ListPendingCommand extends AbstractCommand
 {
-    protected static $defaultName = 'migration:list:pending';
+    protected static $defaultName = 'manticore:migrations:pending';
 
     /**
      * {@inheritDoc}

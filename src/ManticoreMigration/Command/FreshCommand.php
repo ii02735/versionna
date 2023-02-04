@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FreshCommand extends AbstractCommand
 {
-    protected static $defaultName = 'fresh';
+    protected static $defaultName = 'manticore:migrations:fresh';
 
     /**
      * {@inheritDoc}

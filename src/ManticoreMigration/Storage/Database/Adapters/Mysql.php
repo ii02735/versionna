@@ -30,6 +30,6 @@ class Mysql extends Schema
         $statement->bindValue(':tablename', $this->tableName);
         $statement->execute();
 
-        return $statement->fetchColumn() != false;
+        return $statement->fetchColumn() != false && $statement->fetchColumn() > 0;
     }
 }

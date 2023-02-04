@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RollbackCommand extends AbstractCommand
 {
-    protected static $defaultName = 'rollback';
+    protected static $defaultName = 'manticore:migrations:rollback';
 
     /**
      * {@inheritDoc}
@@ -37,17 +37,11 @@ class RollbackCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $commandExitCode = parent::execute($input, $output);
-
-        if ($commandExitCode !== Command::SUCCESS) {
-            return $commandExitCode;
-        }
-
-        $dbConnection = new DatabaseConnection(
-            DatabaseConfiguration::fromArray(
-                $this->configuration['connections'][$this->connection]
-            ),
-        );
+		$dbConnection = new DatabaseConnection(
+			DatabaseConfiguration::fromDsn(
+				$this->configuration['connections'][$this->connection]
+			)
+		);
 
         $manticoreConnection = new ManticoreConnection(
             $this->configuration['manticore_connection']['host'],

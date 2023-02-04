@@ -11,10 +11,11 @@ use SiroDiaz\ManticoreMigration\Storage\MigrationTable;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class MigrateCommand extends AbstractCommand
 {
-    protected static $defaultName = 'migrate';
+    protected static $defaultName = 'manticore:migrations:migrate';
 
     /**
      * {@inheritDoc}
@@ -35,14 +36,9 @@ class MigrateCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $commandExitCode = parent::execute($input, $output);
-
-        if ($commandExitCode !== Command::SUCCESS) {
-            return $commandExitCode;
-        }
-
+		$io = new SymfonyStyle($input, $output);
         $dbConnection = new DatabaseConnection(
-            DatabaseConfiguration::fromArray(
+            DatabaseConfiguration::fromDsn(
                 $this->configuration['connections'][$this->connection]
             )
         );
@@ -66,18 +62,15 @@ class MigrateCommand extends AbstractCommand
             ->migrationsPath($this->configuration['migrations_path'])
             ->migrationTable($migrationTable);
 
-        if (! $migrationTable->exists()) {
-            $output->writeln('<info>Migration table doesn\'t exist</info>');
-        } elseif (! $director->hasPendingMigrations()) {
-            $output->writeln('<info>No pending migrations</info>');
-
+		if ($migrationTable->exists() && !$director->hasPendingMigrations()) {
+            $io->warning('No pending migrations');
             return Command::SUCCESS;
         }
 
         try {
             $director->migrate();
         } catch (Exception $exception) {
-            $output->writeln($exception->getMessage());
+            $io->error($exception->getMessage());
 
             return Command::FAILURE;
         }
