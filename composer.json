@@ -1,5 +1,5 @@
 {
-    "name": "sirodiaz/manticore-migration",
+    "name": "ii02735/manticore-migration",
     "description": "Manticoresearch migration tool. Keep your index schemas up to date programmatically in your application",
     "type": "library",
     "license": "MIT",
