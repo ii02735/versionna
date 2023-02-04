@@ -21,7 +21,7 @@
     ],
     "require": {
         "php": ">=7.4.0",
-        "manticoresoftware/manticoresearch-php": "^2.2",
+        "manticoresoftware/manticoresearch-php": "dev-master",
         "nyholm/dsn": "^2.0",
         "symfony/console": "^5.4.9",
         "symfony/dependency-injection": "^5.4",
@@ -47,5 +47,11 @@
 		"cs-fix": "vendor/bin/php-cs-fixer fix --config .php_cs.dist.php --allow-risky=yes"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/ii02735/manticoresearch-php"
+		}
+	]
 }
