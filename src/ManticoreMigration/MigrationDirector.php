@@ -290,14 +290,14 @@ class MigrationDirector
 
         $migrations = array_combine($classFiles, $migrationsMetadata);
 
-        $loadedMigrations = array_map(function ($migration) {
+        $loadedMigrations = array_reverse(array_map(function ($migration) {
             include_once $migration->getMigrationFullFilePath();
 
             $runner = new ManticoreRunner($this->manticoreConnection->getClient());
             $indexer = new ManticoreIndexer($this->getDbConnection(), $this->getManticoreConnection());
 
             return $migration->getClassInstance($runner, $indexer);
-        }, $migrations);
+        }, $migrations));
 
         for ($i = 0; $i < count($loadedMigrations); $i++) {
             $migration = array_values($loadedMigrations)[$i];
